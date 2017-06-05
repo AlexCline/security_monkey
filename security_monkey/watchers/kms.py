@@ -139,7 +139,7 @@ class KMS(Watcher):
     @record_exception()
     def get_key_rotation_status(self, kms, key_id, alias, **kwargs):
         rotation_status = None
-        if bool('aws/' in alias):
+        if alias.startswith('alias/aws/'):
             # AWS-owned KMS keys don't have a rotation status we can see. Setting a default here saves an API request.
             app.logger.debug("{} {}({}) is an AWS supplied KMS key, overriding to True for rotation state".format(self.i_am_singular, alias, key_id))
             rotation_status = True

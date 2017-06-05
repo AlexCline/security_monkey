@@ -110,7 +110,7 @@ class KMS(Watcher):
     @record_exception()
     def list_key_policies(self, kms, key_id, alias, **kwargs):
         policy_names = []
-        if bool('aws/' in alias):
+        if alias.startswith('alias/aws/'):
             # AWS-owned KMS keys don't have a policy we can see. Setting a default here saves an API request.
             app.logger.debug("{} {}({}) is an AWS supplied KMS key, overriding to [default] for policy".format(self.i_am_singular, alias, key_id))
             policy_names = ['default']
